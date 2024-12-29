@@ -76,6 +76,7 @@ int main() {
         line[strlen(line) - strlen(strstr(line, ":"))] = '\0';
         const unsigned long long result = atoll(line);
 
+        // part 1
         for (int k = 0; k <= pow(2, j - 1); k++) {
             char *multi = binary_permutation(k);
             if (eval(result, numbers[i], j, multi)) {
@@ -84,16 +85,18 @@ int main() {
                 free(multi);
                 break;
             }
-                for (int l = 0; l <= k; l++) {
-                    char *concat_multi = binary_permutation_part_2(multi, (int)strlen(multi), l);
-                    if (eval(result, numbers[i], j, concat_multi)) {
-                        sum += result;
-                        free(concat_multi);
-                        ok = 1;
-                        break;
-                    }
+            
+            // part 2 - ultra mega slow
+            for (int l = 0; l <= k; l++) {
+                char *concat_multi = binary_permutation_part_2(multi, (int)strlen(multi), l);
+                if (eval(result, numbers[i], j, concat_multi)) {
+                    sum += result;
                     free(concat_multi);
+                    ok = 1;
+                    break;
                 }
+                free(concat_multi);
+            }
             if (ok == 1) break;
 
             free(multi);
